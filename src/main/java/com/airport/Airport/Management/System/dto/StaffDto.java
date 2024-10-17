@@ -1,6 +1,6 @@
 package com.airport.Airport.Management.System.dto;
 
-import com.airport.Airport.Management.System.model.Flight;
+
 import lombok.*;
 
 import java.util.List;
