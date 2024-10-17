@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Passenger { //Ticket, Passenger, Flight, Aircraft, CRUD for Bobur
+public class Passenger { //Ticket, Passenger, Flight, CRUD for Bobur
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,6 +21,8 @@ public class Passenger { //Ticket, Passenger, Flight, Aircraft, CRUD for Bobur
     private String passportNumber;
     private String contactDetails;
    @OneToOne(
+           cascade = CascadeType.ALL,
+           fetch = FetchType.LAZY
    )
     private Ticket ticket;
 
