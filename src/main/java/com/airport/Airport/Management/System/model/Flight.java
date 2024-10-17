@@ -19,6 +19,5 @@ public class Flight {
     private Airport departureAirport;
     private Airport arrivalAirport;
     private Aircraft aircraft;
-
     private List<Passenger> passengers;
 }
