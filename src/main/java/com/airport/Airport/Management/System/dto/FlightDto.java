@@ -1,8 +1,6 @@
 package com.airport.Airport.Management.System.dto;
 
-import com.airport.Airport.Management.System.model.Aircraft;
-import com.airport.Airport.Management.System.model.Airport;
-import com.airport.Airport.Management.System.model.Passenger;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
