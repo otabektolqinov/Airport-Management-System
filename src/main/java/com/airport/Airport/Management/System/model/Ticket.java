@@ -1,5 +1,6 @@
 package com.airport.Airport.Management.System.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -9,12 +10,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class Ticket {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
     private Flight flight;
     private String seatNumber;
     private Double price;
     private LocalDateTime bookingDate;
+
+
+
 
 }
