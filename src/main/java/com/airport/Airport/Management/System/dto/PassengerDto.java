@@ -1,10 +1,7 @@
 package com.airport.Airport.Management.System.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
@@ -16,5 +13,5 @@ public class PassengerDto {
     private String lastName;
     private String passportNumber;
     private String contactDetails;
-    private Integer ticketId;
+    private Long ticketId;
 }
