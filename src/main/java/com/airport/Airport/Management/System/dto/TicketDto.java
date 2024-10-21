@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class TicketDto {
     private Long id;
-    private Integer flightId;
+    private Long flightId;
     private String seatNumber;
     private Double price;
     private LocalDateTime bookingDate;
