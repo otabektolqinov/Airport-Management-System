@@ -23,6 +23,12 @@ public class Ticket {
     private String seatNumber;
     private Double price;
     private LocalDateTime bookingDate;
+    @OneToOne(mappedBy = "ticket",
+            fetch = FetchType.EAGER
+    )
+    private Passenger passenger;
+    private LocalDateTime expireDate;
+    private LocalDateTime bookedAt;
 
 
 

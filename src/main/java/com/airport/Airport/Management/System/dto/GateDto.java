@@ -3,6 +3,7 @@ package com.airport.Airport.Management.System.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -16,5 +17,8 @@ public class GateDto {
     private String number;
     private Long terminalId;
     private List<FlightDto> assignedFlights;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
 }

@@ -3,6 +3,7 @@ package com.airport.Airport.Management.System.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -18,8 +19,13 @@ public class Gate {
     private String number;
     @ManyToOne(fetch = FetchType.LAZY)
     private Terminal terminal;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(
+            mappedBy = "gate",
+            fetch = FetchType.LAZY
+    )
     private List<Flight> assignedFlights;
-
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
 }

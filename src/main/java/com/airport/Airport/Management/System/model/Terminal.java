@@ -3,6 +3,7 @@ package com.airport.Airport.Management.System.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -23,4 +24,10 @@ public class Terminal {
             cascade = CascadeType.REMOVE
     )
     private List<Gate> gates;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Airport airport;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
+
 }

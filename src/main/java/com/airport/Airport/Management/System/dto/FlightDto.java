@@ -15,8 +15,13 @@ public class FlightDto {
     private String flightNumber;
     private LocalDateTime departureTime;
     private LocalDateTime arrivalTime;
-    private Integer departureAirportId;
-    private Integer arrivalAirportId;
-    private Integer aircraftId;
+    private Long departureAirportId;
+    private Long arrivalAirportId;
+    private Long aircraftId;
     private List<PassengerDto> passengers;
+    private Long gateId;
+    private List<StaffDto> staffList;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 }

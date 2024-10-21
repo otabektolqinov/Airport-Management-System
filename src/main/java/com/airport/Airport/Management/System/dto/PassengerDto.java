@@ -3,6 +3,8 @@ package com.airport.Airport.Management.System.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -14,4 +16,7 @@ public class PassengerDto {
     private String passportNumber;
     private String contactDetails;
     private Long ticketId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 }

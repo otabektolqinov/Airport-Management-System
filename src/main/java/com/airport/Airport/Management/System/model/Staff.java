@@ -3,6 +3,7 @@ package com.airport.Airport.Management.System.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -19,9 +20,11 @@ public class Staff {
     private String name;
     private String role;
     @ManyToMany(
-            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private List<Flight> assignedFlights;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
 }

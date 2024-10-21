@@ -17,4 +17,7 @@ public class TicketDto {
     private String seatNumber;
     private Double price;
     private LocalDateTime bookingDate;
+    private Long passengerId;
+    private LocalDateTime expireDate;
+    private LocalDateTime bookedAt;
 }

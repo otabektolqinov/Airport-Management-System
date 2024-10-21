@@ -26,7 +26,6 @@ public class Flight {
     @ManyToOne(
             fetch = FetchType.LAZY
     )
-
     private Airport arrivalAirport;
     @ManyToOne(
             fetch = FetchType.LAZY
@@ -34,9 +33,15 @@ public class Flight {
     private Aircraft aircraft;
 
     @ManyToMany(
-            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private List<Passenger> passengers;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Gate gate;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Staff> staffList;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
 }
