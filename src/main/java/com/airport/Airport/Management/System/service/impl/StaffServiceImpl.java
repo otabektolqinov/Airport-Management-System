@@ -44,7 +44,7 @@ public class StaffServiceImpl implements StaffService {
         }
         return ApiResponse.<StaffDto>builder()
                 .success(true)
-                .content(mapper.toDto(optional.get()))
+                .content(mapper.toDtoWithAllEntity(optional.get()))
                 .message("ok")
                 .build();
     }

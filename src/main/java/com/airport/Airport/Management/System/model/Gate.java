@@ -17,10 +17,9 @@ public class Gate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String number;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Terminal terminal;
     @OneToMany(
-            mappedBy = "gate",
             fetch = FetchType.LAZY
     )
     private List<Flight> assignedFlights;

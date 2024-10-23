@@ -3,7 +3,9 @@ package com.airport.Airport.Management.System.service.impl;
 import com.airport.Airport.Management.System.dto.ApiResponse;
 import com.airport.Airport.Management.System.dto.GateDto;
 import com.airport.Airport.Management.System.model.Gate;
+import com.airport.Airport.Management.System.model.Terminal;
 import com.airport.Airport.Management.System.repository.GateRepository;
+import com.airport.Airport.Management.System.repository.TerminalRepository;
 import com.airport.Airport.Management.System.service.GateService;
 import com.airport.Airport.Management.System.service.mapper.GateMapper;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +20,27 @@ public class GateServiceImpl implements GateService {
 
     private final GateRepository gateRepository;
     private final GateMapper gateMapper;
+    private final TerminalRepository terminalRepository;
 
 
     @Override
     public ApiResponse<GateDto> createGate(GateDto dto) {
 
         Gate gate = gateMapper.toEntity(dto);
+
+        Optional<Terminal> optional = terminalRepository.findById(dto.getTerminalId());
+        if (optional.isEmpty()){
+            return ApiResponse.<GateDto>builder()
+                    .message(String.format("terminal with %d id is not found", dto.getTerminalId()))
+                    .success(false)
+                    .code(-3)
+                    .build();
+        }
+        gate.setTerminal(optional.get());
         Gate saved = gateRepository.save(gate);
 
         return ApiResponse.<GateDto>builder()
-                .content(gateMapper.toDto(saved))
+                .content(gateMapper.toDtoWithAllEntity(saved))
                 .success(true)
                 .message("ok")
                 .build();

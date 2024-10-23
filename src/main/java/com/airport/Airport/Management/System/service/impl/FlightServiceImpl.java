@@ -2,8 +2,12 @@ package com.airport.Airport.Management.System.service.impl;
 
 import com.airport.Airport.Management.System.dto.ApiResponse;
 import com.airport.Airport.Management.System.dto.FlightDto;
+import com.airport.Airport.Management.System.model.Airport;
 import com.airport.Airport.Management.System.model.Flight;
+import com.airport.Airport.Management.System.repository.AirportRepository;
 import com.airport.Airport.Management.System.repository.FlightRepository;
+import com.airport.Airport.Management.System.repository.StaffRepository;
+import com.airport.Airport.Management.System.service.AirportService;
 import com.airport.Airport.Management.System.service.FlightService;
 import com.airport.Airport.Management.System.service.mapper.FlightMapper;
 import lombok.AllArgsConstructor;
@@ -18,10 +22,31 @@ import java.util.Optional;
 public class FlightServiceImpl implements FlightService {
     private final FlightMapper flightMapper;
     private final FlightRepository flightRepository;
+    private final AirportRepository airportRepository;
+    private final StaffRepository staffRepository;
 
     @Override
     public ApiResponse<FlightDto> createFlight(FlightDto dto) {
         Flight entity = this.flightMapper.toEntity(dto);
+        Optional<Airport> optionalAirport = airportRepository.findById(dto.getArrivalAirportId());
+        Optional<Airport> optionalDepartureAirport = airportRepository.findById(dto.getDepartureAirportId());
+
+        if (optionalAirport.isEmpty()){
+            return ApiResponse.<FlightDto>builder()
+                    .success(false)
+                    .message(String.format("Arrival Airport Not found with %d id", dto.getArrivalAirportId()))
+                    .code(-2)
+                    .build();
+        }
+        if (optionalDepartureAirport.isEmpty()){
+            return ApiResponse.<FlightDto>builder()
+                    .success(false)
+                    .message(String.format("Departure Airport Not found with %d id", dto.getArrivalAirportId()))
+                    .code(-2)
+                    .build();
+        }
+        entity.setArrivalAirport(optionalAirport.get());
+        entity.setDepartureAirport(optionalDepartureAirport.get());
         Flight saved = this.flightRepository.save(entity);
         return ApiResponse.<FlightDto>builder()
                 .success(true)

@@ -9,9 +9,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public abstract class AircraftMapper {
 
-    @Named(value = "toDto")
     @Mapping(target = "airlineId", ignore = true)
     public abstract AircraftDto toDto(Aircraft aircraft);
+
+    @Named(value = "toDto")
+    public abstract AircraftDto toDtoWithAllEntity(Aircraft aircraft);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "airline", ignore = true)

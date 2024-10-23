@@ -19,7 +19,7 @@ public class AirportDto {
     private String code;
     private String location;
     private List<FlightDto> leavingFlights;
-    private List<FlightDto> arrivalFlights;
+    private List<FlightDto> arrivingFlights;
     private List<TerminalDto> terminals;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

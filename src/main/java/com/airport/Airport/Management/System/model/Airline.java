@@ -21,7 +21,7 @@ public class Airline {
     private String code;
     @OneToMany(
             mappedBy = "airline",
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL
     )
     private List<Aircraft> fleet;

@@ -14,5 +14,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     @Query(nativeQuery = true, value = "select * from flight")
     List<Flight> findAll();
+
+
 }
 

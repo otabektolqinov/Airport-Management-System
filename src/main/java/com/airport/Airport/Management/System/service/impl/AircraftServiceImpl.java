@@ -3,8 +3,10 @@ package com.airport.Airport.Management.System.service.impl;
 import com.airport.Airport.Management.System.dto.AircraftDto;
 import com.airport.Airport.Management.System.dto.ApiResponse;
 import com.airport.Airport.Management.System.model.Aircraft;
+import com.airport.Airport.Management.System.model.Airline;
 import com.airport.Airport.Management.System.model.Airport;
 import com.airport.Airport.Management.System.repository.AircraftRepository;
+import com.airport.Airport.Management.System.repository.AirlineRepository;
 import com.airport.Airport.Management.System.service.AircraftService;
 import com.airport.Airport.Management.System.service.mapper.AircraftMapper;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +20,21 @@ import java.util.Optional;
 public class AircraftServiceImpl implements AircraftService {
 
     private final AircraftRepository aircraftRepository;
+    private final AirlineRepository airlineRepository;
     private final AircraftMapper aircraftMapper;
 
     @Override
     public ApiResponse<AircraftDto> createAircraftDto(AircraftDto dto) {
         Aircraft aircraft = aircraftMapper.toEntity(dto);
+        Optional<Airline> optionalAirline = airlineRepository.findById(dto.getAirlineId());
+        if (optionalAirline.isEmpty()){
+            return ApiResponse.<AircraftDto>builder()
+                    .code(-3)
+                    .success(false)
+                    .message(String.format("Airline with %d id is not found", dto.getAirlineId()))
+                    .build();
+        }
+        aircraft.setAirline(optionalAirline.get());
         Aircraft saved = aircraftRepository.save(aircraft);
         return ApiResponse.<AircraftDto>builder()
                 .success(true)
@@ -45,7 +57,7 @@ public class AircraftServiceImpl implements AircraftService {
         return ApiResponse.<AircraftDto>builder()
                 .success(true)
                 .message("ok")
-                .content(aircraftMapper.toDto(optional.get()))
+                .content(aircraftMapper.toDtoWithAllEntity(optional.get()))
                 .build();
     }
 

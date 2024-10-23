@@ -22,7 +22,7 @@ public class Aircraft {
     @OneToMany(mappedBy = "aircraft")
     private List<Flight> flights;
     @ManyToOne(
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     private Airline airline;
     private LocalDateTime createdAt;

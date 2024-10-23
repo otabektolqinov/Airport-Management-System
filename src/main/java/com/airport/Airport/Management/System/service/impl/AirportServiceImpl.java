@@ -39,9 +39,10 @@ public class AirportServiceImpl implements AirportService {
             return ApiResponse.<AirportDto>builder()
                     .success(true)
                     .message("ok")
-                    .content(airportMapper.toDto(airport.get()))
+                    .content(airportMapper.toDtoWithAllEntity(airport.get()))
                     .build();
         }
+        System.out.println(airport.get().getTerminals());
         return ApiResponse.<AirportDto>builder()
                 .success(false)
                 .message(String.format("Airport with %d is not found", id))

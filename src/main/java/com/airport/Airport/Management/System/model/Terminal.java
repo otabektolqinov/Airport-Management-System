@@ -21,10 +21,10 @@ public class Terminal {
     @OneToMany(
             mappedBy = "terminal",
             fetch = FetchType.LAZY,
-            cascade = CascadeType.REMOVE
+            cascade = CascadeType.ALL
     )
     private List<Gate> gates;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Airport airport;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -1,7 +1,9 @@
 package com.airport.Airport.Management.System.service.impl;
 
+import com.airport.Airport.Management.System.dto.AirportDto;
 import com.airport.Airport.Management.System.dto.ApiResponse;
 import com.airport.Airport.Management.System.dto.TerminalDto;
+import com.airport.Airport.Management.System.model.Airport;
 import com.airport.Airport.Management.System.model.Terminal;
 import com.airport.Airport.Management.System.repository.AirportRepository;
 import com.airport.Airport.Management.System.repository.TerminalRepository;
@@ -24,9 +26,15 @@ public class TerminalServiceImpl implements TerminalService {
     @Override
     public ApiResponse<TerminalDto> createTerminal(TerminalDto dto) {
         Terminal terminal = terminalMapper.toEntity(dto);
-
+        Optional<Airport> optionalAirport = airportRepository.findById(dto.getAirportId());
+        if (optionalAirport.isEmpty()){
+            return ApiResponse.<TerminalDto>builder()
+                    .success(false)
+                    .message(String.format("Airport with %d is not found", dto.getAirportId()))
+                    .build();
+        }
+        terminal.setAirport(optionalAirport.get());
         Terminal saved = terminalRepository.save(terminal);
-
 
         return ApiResponse.<TerminalDto>builder()
                 .success(true)
@@ -45,9 +53,10 @@ public class TerminalServiceImpl implements TerminalService {
                     .success(false)
                     .build();
         }
+        System.out.println(optional.get().getGates());
         return ApiResponse.<TerminalDto>builder()
                 .success(true)
-                .content(terminalMapper.toDto(optional.get()))
+                .content(terminalMapper.toDtoWithAllEntity(optional.get()))
                 .message("ok")
                 .build();
     }

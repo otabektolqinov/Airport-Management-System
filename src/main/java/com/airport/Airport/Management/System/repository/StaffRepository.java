@@ -15,4 +15,6 @@ public interface StaffRepository extends JpaRepository<Staff, Long> {
             nativeQuery = true
     )
     List<Staff> getAll();
+
+
 }

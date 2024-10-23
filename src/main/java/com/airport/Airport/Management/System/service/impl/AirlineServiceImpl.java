@@ -42,7 +42,7 @@ public class AirlineServiceImpl implements AirlineService {
                     .build();
         }
         return ApiResponse.<AirlineDto>builder()
-                .content(airlineMapper.toDto(optional.get()))
+                .content(airlineMapper.toDtoWithAllEntity(optional.get()))
                 .message("ok")
                 .success(true)
                 .build();
