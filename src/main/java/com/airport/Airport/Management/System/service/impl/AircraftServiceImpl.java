@@ -2,6 +2,8 @@ package com.airport.Airport.Management.System.service.impl;
 
 import com.airport.Airport.Management.System.dto.AircraftDto;
 import com.airport.Airport.Management.System.dto.ApiResponse;
+import com.airport.Airport.Management.System.exception.ContentNotFound;
+import com.airport.Airport.Management.System.exception.DatabaseException;
 import com.airport.Airport.Management.System.model.Aircraft;
 import com.airport.Airport.Management.System.model.Airline;
 import com.airport.Airport.Management.System.model.Airport;
@@ -25,33 +27,29 @@ public class AircraftServiceImpl implements AircraftService {
 
     @Override
     public ApiResponse<AircraftDto> createAircraftDto(AircraftDto dto) {
-        Aircraft aircraft = aircraftMapper.toEntity(dto);
-        Optional<Airline> optionalAirline = airlineRepository.findById(dto.getAirlineId());
-        if (optionalAirline.isEmpty()){
+        try {
+            Aircraft aircraft = aircraftMapper.toEntity(dto);
+            Optional<Airline> optionalAirline = airlineRepository.findById(dto.getAirlineId());
+            if (optionalAirline.isEmpty()){
+                throw new ContentNotFound(String.format("Airline with %d id is not found", dto.getAirlineId()));
+            }
+            aircraft.setAirline(optionalAirline.get());
+            Aircraft saved = aircraftRepository.save(aircraft);
             return ApiResponse.<AircraftDto>builder()
-                    .code(-3)
-                    .success(false)
-                    .message(String.format("Airline with %d id is not found", dto.getAirlineId()))
+                    .success(true)
+                    .message("ok")
+                    .content(aircraftMapper.toDto(saved))
                     .build();
+        } catch (Exception e) {
+            throw new DatabaseException(e.getMessage());
         }
-        aircraft.setAirline(optionalAirline.get());
-        Aircraft saved = aircraftRepository.save(aircraft);
-        return ApiResponse.<AircraftDto>builder()
-                .success(true)
-                .message("ok")
-                .content(aircraftMapper.toDto(saved))
-                .build();
     }
 
     @Override
     public ApiResponse<AircraftDto> getAircraftById(Long id) {
         Optional<Aircraft> optional = aircraftRepository.findById(id);
         if (optional.isEmpty()){
-            return ApiResponse.<AircraftDto>builder()
-                    .code(-3)
-                    .success(false)
-                    .message(String.format("Aircraft with %d id is not found", id))
-                    .build();
+            throw new ContentNotFound(String.format("Aircraft with %d id is not found", id));
         }
 
         return ApiResponse.<AircraftDto>builder()
@@ -64,21 +62,21 @@ public class AircraftServiceImpl implements AircraftService {
     @Override
     public ApiResponse<AircraftDto> updateAircraftById(AircraftDto dto, Long id) {
 
-        Optional<Aircraft> optional = aircraftRepository.findById(id);
-        if (optional.isEmpty()){
+        try {
+            Optional<Aircraft> optional = aircraftRepository.findById(id);
+            if (optional.isEmpty()){
+                throw new ContentNotFound(String.format("Aircraft with %d id is not found", id));
+            }
+            Aircraft aircraft = aircraftMapper.updateAllFields(optional.get(), dto);
+            Aircraft saved = aircraftRepository.save(aircraft);
             return ApiResponse.<AircraftDto>builder()
-                    .code(-3)
-                    .success(false)
-                    .message(String.format("Aircraft with %d id is not found", id))
+                    .content(aircraftMapper.toDto(saved))
+                    .message("Successfully updated")
+                    .success(true)
                     .build();
+        } catch (Exception e) {
+            throw new DatabaseException(e.getMessage());
         }
-        Aircraft aircraft = aircraftMapper.updateAllFields(optional.get(), dto);
-        Aircraft saved = aircraftRepository.save(aircraft);
-        return ApiResponse.<AircraftDto>builder()
-                .content(aircraftMapper.toDto(saved))
-                .message("Successfully updated")
-                .success(true)
-                .build();
     }
 
     @Override

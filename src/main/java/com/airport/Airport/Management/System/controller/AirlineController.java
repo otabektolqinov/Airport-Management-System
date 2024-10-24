@@ -4,6 +4,7 @@ import com.airport.Airport.Management.System.dto.AircraftDto;
 import com.airport.Airport.Management.System.dto.AirlineDto;
 import com.airport.Airport.Management.System.dto.ApiResponse;
 import com.airport.Airport.Management.System.service.AirlineService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class AirlineController {
     private final AirlineService airlineService;
 
     @PostMapping
-    public ApiResponse<AirlineDto> createAirline(@RequestBody AirlineDto dto){
+    public ApiResponse<AirlineDto> createAirline(@RequestBody @Valid AirlineDto dto){
         return this.airlineService.createAirline(dto);
     }
 

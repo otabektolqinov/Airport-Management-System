@@ -3,6 +3,7 @@ package com.airport.Airport.Management.System.controller;
 import com.airport.Airport.Management.System.dto.AircraftDto;
 import com.airport.Airport.Management.System.dto.ApiResponse;
 import com.airport.Airport.Management.System.service.AircraftService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class AircraftController {
     private final AircraftService aircraftService;
 
     @PostMapping
-    public ApiResponse<AircraftDto> createAircraft(@RequestBody AircraftDto dto){
+    public ApiResponse<AircraftDto> createAircraft(@RequestBody @Valid AircraftDto dto){
         return this.aircraftService.createAircraftDto(dto);
     }
 
