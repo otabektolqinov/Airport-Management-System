@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
-    Optional<Ticket> findById(Long id);
+    Optional<Ticket> findTicketsByIdAndExpireDateIsNull(Long id);
 
 }

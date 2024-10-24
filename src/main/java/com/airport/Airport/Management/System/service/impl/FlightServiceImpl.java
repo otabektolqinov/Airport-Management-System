@@ -57,7 +57,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public ApiResponse<FlightDto> getFlightById(Long id) {
-        Optional<Flight> flight = this.flightRepository.findById(id);
+        Optional<Flight> flight = this.flightRepository.findFlightByIdAndDeletedAtIsNull(id);
         if (flight.isPresent()) {
             return ApiResponse.<FlightDto>builder()
                     .success(true)
@@ -74,7 +74,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public ApiResponse<FlightDto> deleteFlightById(Long id) {
-        Optional<Flight> flight = this.flightRepository.findById(id);
+        Optional<Flight> flight = this.flightRepository.findFlightByIdAndDeletedAtIsNull(id);
         if (flight.isPresent()) {
             this.flightRepository.delete(flight.get());
             return ApiResponse.<FlightDto>builder()
@@ -92,7 +92,7 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public ApiResponse<FlightDto> updateFlight(Long id, FlightDto dto) {
-        Optional<Flight> flight = this.flightRepository.findById(id);
+        Optional<Flight> flight = this.flightRepository.findFlightByIdAndDeletedAtIsNull(id);
         if (flight.isPresent()) {
             Flight flight1 = this.flightMapper.updateFlightAllFiled(flight.get(), dto);
             Flight saved = this.flightRepository.save(flight1);

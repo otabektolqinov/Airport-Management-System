@@ -19,7 +19,7 @@ public abstract class PassengerMapper {
 //    @Mapping(target = "ticketId", ignore = true)
     public abstract Passenger toEntity(PassengerDto dto);
 
-    @Mapping(target = "ticketId", ignore = true)
+//    @Mapping(target = "ticketId", ignore = true)
     public abstract PassengerDto toDto(Passenger entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

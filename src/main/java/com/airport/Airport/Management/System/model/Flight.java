@@ -2,6 +2,8 @@ package com.airport.Airport.Management.System.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,8 +42,20 @@ public class Flight {
     private Gate gate;
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Staff> staffList;
+    @CreationTimestamp
+    @Column(
+            updatable = false,
+            columnDefinition = "timestamp default current_timestamp"
+    )
     private LocalDateTime createdAt;
+    @UpdateTimestamp
+    @Column(
+            columnDefinition = "timestamp default current_timestamp"
+    )
     private LocalDateTime updatedAt;
+    @Column(
+            updatable = false
+    )
     private LocalDateTime deletedAt;
 
 }

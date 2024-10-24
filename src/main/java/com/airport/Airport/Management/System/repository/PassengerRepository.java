@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface PassengerRepository extends JpaRepository<Passenger, Long> {
-    Optional<Passenger> findById(Long id);
+    Optional<Passenger> findByIdAndDeletedAtIsNull(Long id);
 
     @Query(nativeQuery = true, value = "select * from passenger")
     List<Passenger> getAllPassenger();

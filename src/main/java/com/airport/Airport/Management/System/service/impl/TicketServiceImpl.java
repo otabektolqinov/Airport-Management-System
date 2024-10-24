@@ -32,7 +32,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public ApiResponse<TicketDto> getTicketById(Long id) {
-        Ticket entity = this.ticketRepository.findById(id).orElse(null);
+        Ticket entity = this.ticketRepository.findTicketsByIdAndExpireDateIsNull(id).orElse(null);
         if (entity == null) {
             return ApiResponse.<TicketDto>builder()
                     .success(false)
@@ -49,7 +49,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public ApiResponse<TicketDto> updateTicketById(Long id, TicketDto dto) {
-        Optional<Ticket> ticket = this.ticketRepository.findById(id);
+        Optional<Ticket> ticket = this.ticketRepository.findTicketsByIdAndExpireDateIsNull(id);
         if (ticket.isEmpty()) {
             return ApiResponse.<TicketDto>builder()
                     .success(false)
@@ -69,7 +69,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public ApiResponse<TicketDto> deleteTicketById(Long id) {
-        Optional<Ticket> byId = this.ticketRepository.findById(id);
+        Optional<Ticket> byId = this.ticketRepository.findTicketsByIdAndExpireDateIsNull(id);
         if (byId.isPresent()) {
             this.ticketRepository.delete(byId.get());
             return ApiResponse.<TicketDto>builder()
